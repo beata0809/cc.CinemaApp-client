@@ -1,7 +1,13 @@
 import React from 'react';
+import MoviePanel from '../../components/MoviePanel';
 
 const Main = () => {
-  return <h1>Main View</h1>;
+  return (
+    <div>
+      <h1>Main View</h1>
+      <MoviePanel />
+    </div>
+  );
 };
 
 export default Main;
