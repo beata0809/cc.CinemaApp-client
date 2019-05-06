@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/beata0809/cc.CinemaApp-client#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "antd": "^3.16.6",
     "axios": "^0.18.0",
     "prop-types": "^15.7.2",

@@ -1,6 +1,7 @@
+// pliki ze styled componenets powinny mieć rozszerzenie .js
 import styled from 'styled-components';
 
-export const MovieContainer = styled.div `
+export const MovieContainer = styled.div`
   font-size: 50px;
   width: 230px;
   border-radius: 5px;
@@ -10,7 +11,7 @@ export const MovieContainer = styled.div `
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform .2s linear;
+  transition: transform 0.2s linear;
   &:hover {
     moz-box-shadow: 0 0 2px #999;
     -webkit-box-shadow: 0 0 2px #999;
@@ -25,6 +26,5 @@ export const MovieContainer = styled.div `
 export const TitleMovie = styled.div`
   font-size: 1.3em;
   font-weight: 500;
-  color: rgb(0,0,0);
+  color: rgb(0, 0, 0);
 `;
-
