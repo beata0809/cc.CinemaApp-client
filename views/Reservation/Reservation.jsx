@@ -1,7 +1,7 @@
-/* eslint-disable react/sort-comp */
 import React from 'react';
 import { ReservationDiv, AddIcon, AddButton } from './ReservationStyles';
 
+// Przenieś wszystko do osobnych komponnetów, to jest widok gdzie będą tylko wywoływane komponenty
 class Reservation extends React.Component {
   constructor() {
     super();
@@ -14,6 +14,8 @@ class Reservation extends React.Component {
     };
   }
 
+  // Zamiast klas uzywania klas rób styled-components, po to one są
+  // render() musi być ostatnią metodą w klasie
   render() {
     return (
       <ReservationDiv>
@@ -21,12 +23,37 @@ class Reservation extends React.Component {
           <div className="border reservation"> Rezerwacja </div>
           <div className="border tickets">
             <div className="flex">Wybierz bilety </div>
-            <TicketType text="Normalny" title="normal" ticket={this.state.normal} price='20' click={this.IncreaseDecrease} />
-            <TicketType text="Ulgowy" title="reduced" ticket={this.state.reduced} price='15' click={this.IncreaseDecrease} />
-            <TicketType text="Senior" title="senior" ticket={this.state.senior} price='10' click={this.IncreaseDecrease} />
-            <div className="flex row"><div className="summary">Ilość biletów</div> <div className="summary">{this.state.total} </div> </div>
-            <div className="flex row"><div className="summary">Cena</div> <div className="summary"> {this.state.price} zł </div> </div>
-            <AddButton className="flex" type="primary"> Rezerwuj </AddButton>
+            <TicketType
+              text="Normalny"
+              title="normal"
+              ticket={this.state.normal}
+              price="20"
+              click={this.IncreaseDecrease}
+            />
+            <TicketType
+              text="Ulgowy"
+              title="reduced"
+              ticket={this.state.reduced}
+              price="15"
+              click={this.IncreaseDecrease}
+            />
+            <TicketType
+              text="Senior"
+              title="senior"
+              ticket={this.state.senior}
+              price="10"
+              click={this.IncreaseDecrease}
+            />
+            <div className="flex row">
+              <div className="summary">Ilość biletów</div> <div className="summary">{this.state.total} </div>{' '}
+            </div>
+            <div className="flex row">
+              <div className="summary">Cena</div> <div className="summary"> {this.state.price} zł </div>{' '}
+            </div>
+            <AddButton className="flex" type="primary">
+              {' '}
+              Rezerwuj{' '}
+            </AddButton>
           </div>
           <div className="flex border screen-view"> Screen </div>
         </div>
@@ -34,12 +61,15 @@ class Reservation extends React.Component {
     );
   }
 
+  // a propos tego co podkreśla eslint
+  // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-access-state-in-setstate.md
   IncreaseDecrease = event => {
     const name = event.currentTarget.parentElement.className.split(' ');
     const newState = {};
     if (name[0] === 'plus') {
       newState[name[1]] = parseInt(event.currentTarget.parentElement.getAttribute('value'), 10) + 1;
       this.setState(newState, function update() {
+        // używaj ES6, czyli funkcji strzałkowych
         this.setState({ total: this.state.normal + this.state.reduced + this.state.senior }, function update2() {
           this.setState({ price: this.state.normal * 20 + this.state.reduced * 15 + this.state.senior * 10 });
         });
@@ -56,6 +86,7 @@ class Reservation extends React.Component {
   };
 }
 
+// !!!! KAŻDY KOMPONENET TO OSOBNY PLIK !!!!
 const TicketType = props => {
   return (
     <div className="flex row">
@@ -73,4 +104,9 @@ const TicketType = props => {
     </div>
   );
 };
+
+// PROPS VALIDATION
+
+//
+
 export default Reservation;
