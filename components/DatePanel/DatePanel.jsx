@@ -1,6 +1,5 @@
 import React from 'react';
-import DateDiv from './DatePanelStyles.js';
-import DateContainer from './DateContainerStyles.js';
+import { DateDiv, DateContainer }  from './DatePanelStyles.js';
 
 const DatePanel = () => {
   const renderDates = () => {
