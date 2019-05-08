@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReservationDiv } from './ReservationStyles';
-import Tickets from './Tickets.jsx';
-import Screen from './Screen.jsx';
+import Tickets from '../../components/Tickets';
+import Screen from '../../components/Screen';
 
 const Reservation = () => {
   return (

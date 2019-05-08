@@ -1,6 +1,6 @@
 import React from 'react';
 import { TicketDiv, AddButton, Header, Summary } from './TicketStyles';
-import TicketType from './TicketType.jsx';
+import TicketType from '../TicketType';
 
 class Tickets extends React.Component {
   constructor() {

@@ -8,8 +8,7 @@ export const TicketRow = styled.div`
 
 export const AddIcon = styled(Icon)`
   font-size: 30px;
-  margin: 10px;
-`;
+  margin: 10px;`
 
 export const Row = styled.div`
   display: flex;
