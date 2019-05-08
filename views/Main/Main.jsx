@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'antd';
 import { styleModal } from '../../components/InfoModal/InfoModalStyles';
 import InfoModal from '../../components/InfoModal';
+import MoviePanel from '../../components/MoviePanel';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Main extends React.Component {
@@ -41,6 +42,7 @@ class Main extends React.Component {
     const { visible, confirmLoading, ModalText } = this.state;
     return (
       <div>
+	  <MoviePanel />
         <Button type="primary" onClick={this.showModal}>
           Open Modal with async logic{' '}
         </Button>{' '}

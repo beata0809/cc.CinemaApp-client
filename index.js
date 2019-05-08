@@ -8,6 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import App from './components/App';
 import rootReducer from './store';
+import '@babel/polyfill';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
