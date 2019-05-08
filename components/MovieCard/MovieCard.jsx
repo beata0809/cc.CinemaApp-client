@@ -1,34 +1,44 @@
 import React from 'react';
 import { Card } from 'antd';
-import { MovieContainer, TitleMovie } from './MovieCardStyles.jsx';
+import { MovieContainer, TitleMovie } from './MovieCardStyles';
+import { Spin } from 'antd';
+import { string, number } from 'prop-types';
 
-// użył bym tutaj komponentu funkcyjnego bo jest tylko render
-// albo zamiast extends React.Component zrobił React.PureComponent
-// PureCompoent jest używane zamiast Component jeżeli w klasie jest tylko metoda render()
-// https://reactjs.org/docs/react-api.html#reactpurecomponent
-
-class MovieCard extends React.Component {
+class MovieCard extends React.PureComponent {
   render() {
-    // to samo co w MoviePanel, użyj wyrażenia warunkowego
-    if (this.props.id != null) {
-      return (
-        <MovieContainer>
-          <a href="/">
-            <Card
-              hoverable
-              cover={
-                <img alt="poster" src={`http://image.tmdb.org/t/p/w154/${this.props.poster}`} alt={this.props.title} />
-              }
-            >
-              <TitleMovie>{`${this.props.title}`}</TitleMovie>
-            </Card>
-          </a>
-        </MovieContainer>
-      );
-    } else return null;
+    return this.props.id ? renderMovie(this.props) : loading();
   }
 }
 
-// PROPS TYPES
+const renderMovie = (props) => {
+  return (
+    <MovieContainer>
+      <a href="/">
+        <Card
+          hoverable
+          cover= { <img alt="poster" src={`http://image.tmdb.org/t/p/w154/${props.poster}`} alt={props.title} /> }
+        >
+          <TitleMovie>{`${props.title}`}</TitleMovie>
+        </Card>
+      </a>
+    </MovieContainer>
+  );
+}
+
+const loading = () => {
+  return (
+    <LoadDiv>
+      <Spin tip="Loading..."/>
+    </LoadDiv>
+  );
+}
+
+
+MovieCard.propTypes = {
+  id: number,
+  title: string,
+  poster: string,
+  overview: string
+}
 
 export default MovieCard;

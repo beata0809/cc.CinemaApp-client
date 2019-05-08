@@ -1,4 +1,3 @@
-// pliki ze styled componenets powinny mieć rozszerzenie .js
 import styled from 'styled-components';
 
 export const MovieContainer = styled.div`
