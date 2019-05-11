@@ -24,7 +24,7 @@ TicketType.propTypes = {
   text: PropTypes.string,
   title: PropTypes.string,
   ticket: PropTypes.number,
-  price: PropTypes.number,
+  price: PropTypes.string,
   handleClick: PropTypes.func,
 };
 

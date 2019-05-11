@@ -1,36 +1,80 @@
 import React from 'react';
-import { ScreenDiv, OneSit, SitsDiv, ScreenInHall, LeftRows, RightRows } from './ScreenStyles';
+import { PropTypes } from 'prop-types';
+import { Sits } from '../Sits/Sits.jsx';
+import { Rows } from '../Rows/Rows.jsx';
+import { ScreenDiv, SitsDiv, ScreenInHall, LeftRows } from './ScreenStyles';
 
-const Screen = () => {
-  const renderSits = () => {
-    const sits = [];
-    for (let i = 0; i < 60; i++) {
-      sits.push(`${i}`);
-    }
-    return sits.map(sit => (
-      <OneSit></OneSit>
-    ));
+class Screen extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      choosed: 0,
+      sitsList: [],
+    };
   }
-  const renderRows = () => {
-    const rows = [];
-    for (let i = 0; i < 6; i++) {
-      rows.push(String.fromCharCode(65 + i));
+
+  chooseSit = event => {
+    if (this.state.sitsList.indexOf(event.target.id) !== -1) { //odznaczanie miejsca zaznaczonego wczesniej
+      const array = [...this.state.sitsList];
+      const index = this.state.sitsList.indexOf(event.target.id);
+      array.splice(index, 1);
+      this.setState(
+        prevState => ({
+          choosed: prevState.choosed - 1,
+        }),
+        this.setState(
+          {
+            sitsList: array,
+          },
+          this.changeStatus(event),
+        ),
+        console.log(this.state.sitsList),
+      );
+      return (event.target.style.backgroundColor = 'darkgreen');
     }
-    return rows.map(row => (
-      <p>{row}</p>
-    ));
+    if (this.props.passTickets <= this.state.choosed) { //sprawdza czy wybrano bilety
+      console.log('Wybierz bilecik');
+      window.alert('Wybierz bilecik');
+      return;
+    }
+
+    this.setState(   //zaznaczenie miejsca
+      prevState => ({
+        choosed: prevState.choosed + 1,
+      }),
+      this.setState(
+        {
+          sitsList: [...this.state.sitsList, event.target.id],
+        },
+        this.changeStatus(event),
+      ),
+    );
+  };
+
+  changeStatus = event => {
+    console.log(this.state.sitsList);
+    event.target.style.backgroundColor = 'red';
+  };
+
+  render() {
+    return (
+      <ScreenDiv>
+        <ScreenInHall>
+          <p>Ekran</p>
+        </ScreenInHall>
+        <LeftRows>
+          <Rows />
+        </LeftRows>
+        <SitsDiv>
+          <Sits handleClick={this.chooseSit} />
+        </SitsDiv>
+      </ScreenDiv>
+    );
   }
-  renderRows();
-  return (
-    <ScreenDiv>
-      <ScreenInHall>
-        <p>Ekran</p>
-      </ScreenInHall>
-      <LeftRows>{renderRows()}</LeftRows>
-      <SitsDiv> {renderSits()}</SitsDiv>
-      <RightRows>{renderRows()}</RightRows>
-    </ScreenDiv>
-  );
+}
+
+Screen.propTypes = {
+  passTickets: PropTypes.number,
 };
 
 export default Screen;

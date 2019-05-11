@@ -14,11 +14,6 @@ export const ScreenDiv = styled.div`
                        "rows-left sits rows-right"
 `;
 
-export const OneSit = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: lightgrey;
-`;
 export const SitsDiv = styled.div`
   grid-area: sits;
   display: grid;
@@ -27,9 +22,11 @@ export const SitsDiv = styled.div`
 `;
 export const ScreenInHall = styled.div`
   grid-area: screen;
+  justify-self: center;
 `;
 export const LeftRows = styled.div`
   grid-area: rows-left;
+  justify-self: center;
 `;
 export const RightRows = styled.div`
   grid-area: rows-right;
