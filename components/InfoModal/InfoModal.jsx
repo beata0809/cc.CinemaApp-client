@@ -1,7 +1,7 @@
-import React from 'react';
-import { Spin } from 'antd';
+import React, { Fragment } from 'react';
+import { Card, Spin, Divider } from 'antd';
 import { string, number } from 'prop-types';
-import { LoadDiv } from './InfoModalStyles.js';
+import { LoadDiv, Title, MoviePhoto, Desc, DescMovie } from './InfoModalStyles.js';
 
 class InfoModal extends React.Component {
   loading = () => {
@@ -14,7 +14,16 @@ class InfoModal extends React.Component {
 
   // wyswietla wszystkie filmy
   renderModal = () => {
-    return <div>{`${this.props.title}+${this.props.id}+${this.props.overview}`}</div>;
+    return (
+      <Fragment>
+        <MoviePhoto>
+          <img src={`http://image.tmdb.org/t/p/w154/${this.props.poster}`} alt={this.props.title} />
+        </MoviePhoto>
+        <Title>{`${this.props.title}`}</Title>
+        <Desc>Opis filmu</Desc>
+        <DescMovie>{`${this.props.overview}`}</DescMovie>
+      </Fragment>
+    );
   };
 
   render() {
