@@ -1,4 +1,3 @@
-// pliki ze styled componenets powinny mieć rozszerzenie .js
 import styled from 'styled-components';
 
 export const MovieContainer = styled.div`
@@ -27,4 +26,12 @@ export const TitleMovie = styled.div`
   font-size: 1.3em;
   font-weight: 500;
   color: rgb(0, 0, 0);
+`;
+export const LoadDiv = styled.div`
+  text-align: center;
+  background-color: white;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  margin: 20px 0;
 `;

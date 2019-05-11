@@ -1,70 +1,94 @@
 import React from 'react';
-import { Divider } from 'antd';
+import { Divider, Spin, Modal } from 'antd';
 import { connect } from 'react-redux';
+import { object, func } from 'prop-types';
+import InfoModal from '../InfoModal';
 import { fetchMovies } from '../../store/actions';
-import { MovieDiv } from './MoviePanelStyles.jsx';
+import { MovieDiv, LoadDiv } from './MoviePanelStyles.js';
 import MovieCard from '../MovieCard';
 
 class MoviePanel extends React.Component {
+  state = { visible: false };
+
   componentDidMount() {
     this.props.fetchMovies();
   }
 
-  // zrobił bym osobną metode (np. renderMovies) renderującą filmy dynamicznie, przy użyciu filter() i map()
-  // filter to przefiltrowania po indexie tablicy, która przychodzi z api tak zeby było tylko 5 filmów
-  // map to utworzenia MovieCard dla każdego elementu w tabllicy utworzonej przez filter
+  loading = () => {
+    return (
+      <LoadDiv>
+        <Spin tip="Loading..." />
+      </LoadDiv>
+    );
+  };
+
+  showModal = e => {
+    e.preventDefault();
+    console.log(e.target.value);
+    this.setState({
+      visible: true,
+    });
+  };
+
+  handleOk = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  renderMovies = () => {
+    const movies = this.props.movies.slice(0, 5).map(movie => {
+      return (
+        <MovieCard
+          key={movie.id}
+          id={movie.id}
+          title={movie.title}
+          poster={movie.poster_path}
+          overview={movie.overview}
+        />
+      );
+    });
+
+    const modals = this.props.movies.slice(0, 5).map(movie => {
+      return (
+        <InfoModal
+          key={movie.id}
+          id={movie.id}
+          title={movie.title}
+          poster={movie.poster_path}
+          overview={movie.overview}
+        />
+      );
+    });
+
+    return (
+      <div>
+        <Divider>Movies Now Playing</Divider>
+        <MovieDiv onClick={this.showModal}>{movies}</MovieDiv>
+        <Modal visible={this.state.visible} onOk={this.handleOk} onCancel={this.handleCancel}>
+          {modals}
+        </Modal>
+      </div>
+    );
+  };
 
   render() {
+    // eslint-disable-next-line no-use-before-define
     console.log(this.props.movies);
-    // starczy samo (this.props.movies) bo null jest wartością falsy, ale i tak to jest złe podejście ;)
-    // zamiast tego if'a w MovieDiv można zrobić operator warunkowy => {this.props.movies ? this.renderMovies : "Loading..."}
-    // zamiast tego Loading.. na antd są gotowe komponenty takich loaderów co się kręcą, także możesz taki wstawić. Nazywa się to chyba Spinner, ale nie jestem pewnien
-    if (this.props.movies != null) {
-      return (
-        <div>
-          <Divider>Movies Now Playing</Divider>
-          <MovieDiv>
-            <MovieCard
-              id={this.props.movies[0].id}
-              title={this.props.movies[0].title}
-              poster={this.props.movies[0].poster_path}
-              overview={this.props.movies[0].overview}
-            />
-            <MovieCard
-              id={this.props.movies[1].id}
-              title={this.props.movies[1].title}
-              poster={this.props.movies[1].poster_path}
-              overview={this.props.movies[1].overview}
-            />
-            <MovieCard
-              id={this.props.movies[2].id}
-              title={this.props.movies[2].title}
-              poster={this.props.movies[2].poster_path}
-              overview={this.props.movies[2].overview}
-            />
-            <MovieCard
-              id={this.props.movies[3].id}
-              title={this.props.movies[3].title}
-              poster={this.props.movies[3].poster_path}
-              overview={this.props.movies[3].overview}
-            />
-            <MovieCard
-              id={this.props.movies[4].id}
-              title={this.props.movies[4].title}
-              poster={this.props.movies[4].poster_path}
-              overview={this.props.movies[4].overview}
-            />
-          </MovieDiv>
-        </div>
-      );
-    } else return null;
+    return this.props.movies ? this.renderMovies() : this.loading();
   }
 }
 
-//Props validation
-// MoviePanel.propsTypes = {
-//  trzeba przypisać propsom ich typy, tak jak w pdfie.
-// }
+MoviePanel.propTypes = {
+  movies: object,
+  fetchMovies: func,
+};
 
 const mapStateToProps = state => {
   return { movies: state.movies };

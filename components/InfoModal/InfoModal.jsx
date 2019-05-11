@@ -1,58 +1,33 @@
 import React from 'react';
+import { Spin } from 'antd';
+import { string, number } from 'prop-types';
+import { LoadDiv } from './InfoModalStyles.js';
 
 class InfoModal extends React.Component {
-  // state = {
-  //   ModalText: 'Content of the modal',
-  //   visible: false,
-  //   confirmLoading: false,
-  // };
-
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
+  loading = () => {
+    return (
+      <LoadDiv>
+        <Spin tip="Loading..." />
+      </LoadDiv>
+    );
   };
 
-  handleOk = () => {
-    this.setState({
-      ModalText: 'The modal will be closed after two seconds',
-      confirmLoading: true,
-    });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false,
-      });
-    }, 2000);
-  };
-
-  handleCancel = () => {
-    console.log('Clicked cancel button');
-    this.setState({
-      visible: false,
-    });
+  // wyswietla wszystkie filmy
+  renderModal = () => {
+    return <div>{`${this.props.title}+${this.props.id}+${this.props.overview}`}</div>;
   };
 
   render() {
-    return <div>InfoModal</div>;
+    // console.log(this.props.id);
+    return this.props.id ? this.renderModal(this.props) : this.loading();
   }
-  // const { visible, confirmLoading, ModalText } = this.state;
-  // return (
-  //   <div>
-  //     <Button type="primary" onClick="{this.showModal}">
-  //       Open Modal with async logic{' '}
-  //     </Button>{' '}
-  //     <Modal
-  //       title="Title"
-  //       visible={visible}
-  //       onOk={this.handleOk}
-  //       confirmLoading={confirmLoading}
-  //       onCancel={this.handleCancel}
-  //     >
-  //       <p> {ModalText} </p>{' '}
-  //     </Modal>{' '}
-  //   </div>
-  // );
 }
+
+InfoModal.propTypes = {
+  id: number,
+  title: string,
+  poster: string,
+  overview: string,
+};
 
 export default InfoModal;

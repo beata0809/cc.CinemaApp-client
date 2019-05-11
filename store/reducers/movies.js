@@ -1,6 +1,7 @@
+import { FETCH_MOVIES } from '../types';
+
 const fetchMoviesReducer = (state = null, action) => {
-  // to samo co w action creatorze zaimportuj sobie zmienną z types.js
-  if (action.type === 'FETCH_MOVIES') {
+  if (action.type === FETCH_MOVIES) {
     return action.payload;
   }
   return state;

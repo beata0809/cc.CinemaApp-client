@@ -1,10 +1,11 @@
 import moviedb from '../../apis/moviedb';
+import { FETCH_MOVIES } from '../types';
 
 export const fetchMovies = () => async dispatch => {
   try {
-    const { data } = await moviedb.get(`/`); // powinno być await mociedb.get('/')
+    const { data } = await moviedb.get(``);
     dispatch({
-      type: 'FETCH_MOVIES', // zrób zmienną const FETCH_MOVIES = "FETCH_MOVIES" w pliku types.js i ją tu zaimportuj i wstaw w to miejsce
+      type: FETCH_MOVIES,
       payload: data.results,
     });
   } catch (ex) {
