@@ -1,24 +1,26 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Input } from 'antd';
 
 class FormModal extends React.Component {
-  renderInput({ input, label }){
+  onSubmit(formValues) {
+    console.log(formValues);
+  }
+
+  renderInput({ input, label }) {
     return (
-      <div className="field" >
+      <div className="field">
         <label>{label}</label>
         <input {...input} />
       </div>
     );
   }
 
-  onSubmit(formValues){
-    console.log(formValues);
-  }
-
-  render(){
-    return(
+  render() {
+    return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="firstName" component={this.renderInput} label="Imię" />
+        <Field name="firstName" component={Input} label="Imię" />
         <Field name="lastName" component={this.renderInput} label="Nazwisko" />
         <Field name="email" component={this.renderInput} label="Adres email" />
         <p>Suma:</p>
@@ -30,7 +32,7 @@ class FormModal extends React.Component {
 }
 
 FormModal = reduxForm({
-  form: 'FormModal'
+  form: 'FormModal',
 })(FormModal);
 
 export default FormModal;

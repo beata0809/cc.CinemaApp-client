@@ -8,7 +8,7 @@ export const DateDiv = styled.div`
   flex-wrap: wrap;
 `;
 
-export const DateAnchor = styled.a `
+export const DateAnchor = styled.a`
   &:first-of-type * {
     background-color: #aaa;
     color: white;
@@ -26,7 +26,7 @@ export const DateAnchor = styled.a `
   }
 `;
 
-export const DateContainer = styled.div `
+export const DateContainer = styled.div`
   height: 180px;
   width: 150px;
   border-radius: 10px;
@@ -45,4 +45,3 @@ export const DateContainer = styled.div `
     transform: scale(1.02);
   }
 `;
-
