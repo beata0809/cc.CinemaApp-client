@@ -101,9 +101,7 @@ class Tickets extends React.Component {
           onCancel={this.handleCancel}
           footer={null}
         >
-          <FormModal 
-            price={this.state.price}
-          />
+          <FormModal />
         </Modal>
       </TicketDiv>
     );
