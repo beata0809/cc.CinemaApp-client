@@ -1,36 +1,60 @@
 import styled from 'styled-components';
+import { DatePicker } from 'antd';
 
+export const MoviePhoto = styled.div`
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 400px;
+`;
 export const Title = styled.div`
+  width: 300px;
+  justify-content: center;
+  text-align: center;
   margin: 0;
   font-size: 25px;
   position: absolute;
-  right: 10%;
+  right: 10px;
   font-weight: bold;
   top: 30px;
   color: rgb(0, 0, 0);
 `;
 
-export const MoviePhoto = styled.div`
-  width: 230px;
-  border-radius: 5px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 230px;
-  }
-`;
 export const Desc = styled.div`
-  font-size: 20px;
   position: absolute;
-  right: 100px;
-  top: 80px;
+  font-size: 20px;
+  width: 300px;
+  justify-content: center;
+  text-align: center;
+  right: 10px;
+  top: 100px;
 `;
 export const DescMovie = styled.div`
-  font-size: 10px;
-  right: 20px;
-  top: 120px;
+  position: absolute;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  width: 300px;
+  right: 10px;
+  top: 150px;
+`;
+
+export const PickerDate = styled(DatePicker)`
+  position: absolute;
+  left: 150px;
+  top: 310px;
+`;
+export const Hour = styled.div`
+  position: absolute;
+  left: 120px;
+  font-weight: bold;
+  font-size: 20px;
+  top: 350px;
+`;
+export const Info = styled.div`
+  position: absolute;
+  left: 80px;
+  top: 280px;
 `;
 export const LoadDiv = styled.div`
   text-align: center;

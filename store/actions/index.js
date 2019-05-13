@@ -1,5 +1,5 @@
 import moviedb from '../../apis/moviedb';
-import { FETCH_MOVIES, CATCH_MOVIE } from '../types';
+import { FETCH_MOVIES, CATCH_MOVIE, CATCH_DATE } from '../types';
 
 export const fetchMovies = () => async dispatch => {
   try {
@@ -15,5 +15,10 @@ export const fetchMovies = () => async dispatch => {
 
 export const catchMovie = par => ({
   type: CATCH_MOVIE,
+  payload: par,
+});
+
+export const catchDate = par => ({
+  type: CATCH_DATE,
   payload: par,
 });

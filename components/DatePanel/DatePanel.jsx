@@ -1,7 +1,15 @@
 import React from 'react';
-import { DateDiv, DateContainer }  from './DatePanelStyles.js';
+import { connect } from 'react-redux';
+import { func } from 'prop-types';
+import { Link } from 'react-router-dom';
+import { DateDiv, DateContainer } from './DatePanelStyles.js';
+import { catchDate } from '../../store/actions';
 
-const DatePanel = () => {
+const DatePanel = props => {
+  const getDate = (e, date) => {
+    e.preventDefault();
+    props.catchDate(date);
+  };
   const renderDates = () => {
     const dates = [];
     const weekDaysNames = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
@@ -13,12 +21,12 @@ const DatePanel = () => {
       dates.push({
         day: date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`,
         month: date.getMonth() < 10 ? `0${date.getMonth()}` : `${date.getMonth()}`,
-        weekDay: weekDaysNames[date.getDay()]
+        weekDay: weekDaysNames[date.getDay()],
       });
     }
     return dates.map(date => (
       <a href="/" key={`${date.day}${date.month}`}>
-        <DateContainer>
+        <DateContainer onClick={e => getDate(e, date)}>
           <h2>
             {date.day}.{date.month}
           </h2>
@@ -30,4 +38,15 @@ const DatePanel = () => {
   return <DateDiv>{renderDates()}</DateDiv>;
 };
 
-export default DatePanel;
+DatePanel.propTypes = {
+  catchDate: func,
+};
+
+const mapStateToProps = state => {
+  return { pickedDate: state.pickedDate };
+};
+
+export default connect(
+  mapStateToProps,
+  { catchDate },
+)(DatePanel);
