@@ -5,4 +5,5 @@ export const ReservationDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 20px;
 `;
