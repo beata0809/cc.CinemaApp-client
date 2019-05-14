@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { catchDate } from '../../store/actions';
 import { DateDiv, DateContainer, DateAnchor } from './DatePanelStyles.js';
 
+
 const DatePanel = props => {
   const getDate = (e, date) => {
     e.preventDefault();
