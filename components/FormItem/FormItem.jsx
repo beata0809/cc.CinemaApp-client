@@ -41,7 +41,6 @@ FormItem.propTypes = {
   label: string,
   meta: object.isRequired,
   style: object,
-  validateStatus: string,
 };
 
 export default FormItem;

@@ -1,8 +1,8 @@
 import React from 'react';
+import { Modal } from 'antd';
 import { TicketDiv, AddButton, Header, Summary } from './TicketStyles';
 import TicketType from '../TicketType';
-import { Modal, Button } from 'antd';
-import FormModal from '../FormModal'
+import FormModal from '../FormModal';
 
 class Tickets extends React.Component {
   constructor() {
@@ -13,7 +13,7 @@ class Tickets extends React.Component {
       senior: 0,
       total: 0,
       price: 0,
-      visible: false
+      visible: false,
     };
   }
 
@@ -55,7 +55,6 @@ class Tickets extends React.Component {
   };
 
   handleCancel = e => {
-    console.log(e);
     this.setState({
       visible: false,
     });
@@ -96,7 +95,8 @@ class Tickets extends React.Component {
           Rezerwuj
         </AddButton>
         <Modal
-          title="Basic Modal"
+          title="Formularz rezerwacji"
+          centered
           visible={this.state.visible}
           onCancel={this.handleCancel}
           footer={null}
