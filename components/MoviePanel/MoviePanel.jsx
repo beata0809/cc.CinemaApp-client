@@ -3,7 +3,7 @@
 import React, { Fragment } from 'react';
 import { Divider, Spin, Modal, Button } from 'antd';
 import { connect } from 'react-redux';
-import { object, func } from 'prop-types';
+import { object, func, array } from 'prop-types';
 import { Link } from 'react-router-dom';
 import InfoModal from '../InfoModal';
 import { fetchMovies, catchMovie } from '../../store/actions';
@@ -91,7 +91,7 @@ class MoviePanel extends React.Component {
 }
 
 MoviePanel.propTypes = {
-  movies: object,
+  movies: array,
   singleMovie: object,
   fetchMovies: func,
   catchMovie: func,

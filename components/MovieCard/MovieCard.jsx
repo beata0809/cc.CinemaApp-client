@@ -18,7 +18,7 @@ class MovieCard extends React.Component {
         <a href="/">
           <Card
             hoverable
-            cover={<img src={`http://image.tmdb.org/t/p/w154/${this.props.poster}`} alt={this.props.title} />}
+            cover={<img src={`http://image.tmdb.org/t/p/w300/${this.props.poster}`} alt={this.props.title} />}
           >
             <TitleMovie>{`${this.props.title}`}</TitleMovie>
           </Card>
