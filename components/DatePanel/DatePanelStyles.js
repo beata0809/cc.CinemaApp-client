@@ -8,10 +8,28 @@ export const DateDiv = styled.div`
   flex-wrap: wrap;
 `;
 
+export const DateAnchor = styled.a `
+  &:first-of-type * {
+    background-color: #aaa;
+    color: white;
+  }
+  &:focus * {
+    background-color: #aaa;
+    color: white;
+  }
+  .not-focused {
+    & * {
+      background-color: white;
+      color: black;
+    }
+    background-color: white;
+  }
+`;
+
 export const DateContainer = styled.div `
   height: 180px;
   width: 150px;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 8px;
   text-align: center;
   border: 1px #ddd solid;
@@ -27,4 +45,4 @@ export const DateContainer = styled.div `
     transform: scale(1.02);
   }
 `;
-export default DateDiv;
+
