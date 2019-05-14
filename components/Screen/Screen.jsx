@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { fetchSits } from '../../store/actions';
+import { fetchSits, catchMovie, catchDate } from '../../store/actions';
 import { Sits } from '../Sits/Sits.jsx';
 import { Rows } from '../Rows/Rows.jsx';
 import { Legend } from '../Legend/Legend.jsx';
@@ -71,18 +71,20 @@ class Screen extends React.Component {
   };
 
   renderTakenSits = async () => {
-    console.log(2);
-    //przykładowy film
-    await this.props.fetchSits('aaaa', '123');
-    const takenSits = this.props.sits[0].seats;
-    this.setState({
-      takenSits,
-    });
-    for (let i = 0; i < takenSits.length; i += 1) {
-      console.log(takenSits[i]);
-      document.getElementById(takenSits[i]).style.backgroundColor = 'red';
+    const movie = await this.props.singleMovie.title;
+    const date = await this.props.pickedDate;
+    const dateString = `${date.day}.${date.month}`;
+    await this.props.fetchSits(movie, dateString);
+    if (this.props.sits.length > 0) {
+      const takenSits = this.props.sits[0].seats;
+      this.setState({
+        takenSits,
+      });
+      for (let i = 0; i < takenSits.length; i += 1) {
+        document.getElementById(takenSits[i]).style.backgroundColor = 'red';
+      }
+      this.props.downTakenSits(takenSits.length);
     }
-    this.props.downTakenSits(takenSits.length);
   };
 
   render() {
@@ -110,11 +112,15 @@ Screen.propTypes = {
   fetchSits: PropTypes.func,
   downTakenSits: PropTypes.func,
   sits: PropTypes.array,
+  singleMovie: PropTypes.object,
+  pickedDate: PropTypes.object,
 };
 
 const mapStateToProps = state => {
   return {
     sits: state.sits,
+    singleMovie: state.singleMovie,
+    pickedDate: state.pickedDate,
   };
 };
 
@@ -122,5 +128,7 @@ export default connect(
   mapStateToProps,
   {
     fetchSits,
+    catchMovie,
+    catchDate,
   },
 )(Screen);
