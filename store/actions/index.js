@@ -7,8 +7,9 @@ export const fetchSits = (title, date) => async dispatch => {
     const { data } = await server.get(`ticket/${title}/${date}`);
     dispatch({
       type: FETCH_SITS,
-      payload: data,  
-    } catch (ex) {
+      payload: data,
+    });
+  } catch (ex) {
     console.log(ex);
   }
 };
@@ -20,6 +21,10 @@ export const fetchMovies = () => async dispatch => {
       type: FETCH_MOVIES,
       payload: data.results,
     });
+  } catch (ex) {
+    console.log(ex);
+  }
+};
 
 export const fetchUpcomingMovies = () => async dispatch => {
   try {
