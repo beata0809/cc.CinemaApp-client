@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { fetchSits } from '../../store/actions';
 import { Sits } from '../Sits/Sits.jsx';
 import { Rows } from '../Rows/Rows.jsx';
-import { ScreenDiv, SitsDiv, ScreenInHall, LeftRows } from './ScreenStyles';
+import { Legend } from '../Legend/Legend.jsx';
+import { ScreenDiv, SitsDiv, ScreenInHall, LeftRows, LegendDiv } from './ScreenStyles';
 
 class Screen extends React.Component {
   constructor() {
@@ -10,13 +13,25 @@ class Screen extends React.Component {
     this.state = {
       choosed: 0,
       sitsList: [],
+      takenSits: [],
     };
   }
 
+  componentDidMount() {
+    this.renderTakenSits();
+  }
+
   chooseSit = event => {
-    if (this.state.sitsList.indexOf(event.target.id) !== -1) { //odznaczanie miejsca zaznaczonego wczesniej
+    // sprawdza czy miejsce nie jest wcześniej zaznaczone
+    if (this.state.takenSits.indexOf(parseInt(event.target.id, 10)) !== -1) {
+      console.log('To miejsce jest już zarezerwowane.');
+      window.alert('To miejsce jest już zarezerwowane.');
+      return;
+    }
+    // odznaczanie miejsca zaznaczonego wczesniej
+    if (this.state.sitsList.indexOf(parseInt(event.target.id, 10)) !== -1) {
       const array = [...this.state.sitsList];
-      const index = this.state.sitsList.indexOf(event.target.id);
+      const index = this.state.sitsList.indexOf(parseInt(event.target.id, 10));
       array.splice(index, 1);
       this.setState(
         prevState => ({
@@ -32,19 +47,20 @@ class Screen extends React.Component {
       );
       return (event.target.style.backgroundColor = 'darkgreen');
     }
-    if (this.props.passTickets <= this.state.choosed) { //sprawdza czy wybrano bilety
-      console.log('Wybierz bilecik');
-      window.alert('Wybierz bilecik');
+    // sprawdza czy wybrano bilety
+    if (this.props.passTickets <= this.state.choosed) {
+      console.log('Wybierz bilet');
+      window.alert('Wybierz bilet');
       return;
     }
-
-    this.setState(   //zaznaczenie miejsca
+    // zaznaczenie miejsca
+    this.setState(
       prevState => ({
         choosed: prevState.choosed + 1,
       }),
       this.setState(
         {
-          sitsList: [...this.state.sitsList, event.target.id],
+          sitsList: [...this.state.sitsList, parseInt(event.target.id, 10)],
         },
         this.changeStatus(event),
       ),
@@ -53,7 +69,21 @@ class Screen extends React.Component {
 
   changeStatus = event => {
     console.log(this.state.sitsList);
-    event.target.style.backgroundColor = 'red';
+    event.target.style.backgroundColor = 'yellow';
+  };
+
+  renderTakenSits = async () => {
+    console.log(2);
+    //przykłowy film
+    await this.props.fetchSits('aaaa', '123');
+    const takenSits = this.props.sits[0].seats;
+    this.setState({
+      takenSits,
+    });
+    for (let i = 0; i < takenSits.length; i += 1) {
+      console.log(takenSits[i]);
+      document.getElementById(takenSits[i]).style.backgroundColor = 'red';
+    }
   };
 
   render() {
@@ -68,6 +98,9 @@ class Screen extends React.Component {
         <SitsDiv>
           <Sits handleClick={this.chooseSit} />
         </SitsDiv>
+        <LegendDiv>
+          <Legend />
+        </LegendDiv>
       </ScreenDiv>
     );
   }
@@ -75,6 +108,18 @@ class Screen extends React.Component {
 
 Screen.propTypes = {
   passTickets: PropTypes.number,
+  fetchSits: PropTypes.func,
 };
 
-export default Screen;
+const mapStateToProps = state => {
+  return {
+    sits: state.sits,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    fetchSits,
+  },
+)(Screen);

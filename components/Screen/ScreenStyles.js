@@ -11,7 +11,8 @@ export const ScreenDiv = styled.div`
   ${'' /* align-items: center; */}
   display: grid;
   grid-template-areas: "screen screen screen"
-                       "rows-left sits rows-right"
+                       "rows-left sits row"
+                       "legend legend legend"
 `;
 
 export const SitsDiv = styled.div`
@@ -28,6 +29,9 @@ export const LeftRows = styled.div`
   grid-area: rows-left;
   justify-self: center;
 `;
-export const RightRows = styled.div`
-  grid-area: rows-right;
+export const Row = styled.div`
+  grid-area: row;
+`;
+export const LegendDiv = styled.div`
+  grid-area: legend;
 `;
