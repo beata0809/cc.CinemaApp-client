@@ -24,7 +24,6 @@ class Screen extends React.Component {
   chooseSit = event => {
     // sprawdza czy miejsce nie jest wcześniej zaznaczone
     if (this.state.takenSits.indexOf(parseInt(event.target.id, 10)) !== -1) {
-      console.log('To miejsce jest już zarezerwowane.');
       window.alert('To miejsce jest już zarezerwowane.');
       return;
     }
@@ -49,7 +48,6 @@ class Screen extends React.Component {
     }
     // sprawdza czy wybrano bilety
     if (this.props.passTickets <= this.state.choosed) {
-      console.log('Wybierz bilet');
       window.alert('Wybierz bilet');
       return;
     }
@@ -74,7 +72,7 @@ class Screen extends React.Component {
 
   renderTakenSits = async () => {
     console.log(2);
-    //przykłowy film
+    //przykładowy film
     await this.props.fetchSits('aaaa', '123');
     const takenSits = this.props.sits[0].seats;
     this.setState({
@@ -84,6 +82,7 @@ class Screen extends React.Component {
       console.log(takenSits[i]);
       document.getElementById(takenSits[i]).style.backgroundColor = 'red';
     }
+    this.props.downTakenSits(takenSits.length);
   };
 
   render() {
@@ -109,6 +108,8 @@ class Screen extends React.Component {
 Screen.propTypes = {
   passTickets: PropTypes.number,
   fetchSits: PropTypes.func,
+  downTakenSits: PropTypes.func,
+  sits: PropTypes.array,
 };
 
 const mapStateToProps = state => {

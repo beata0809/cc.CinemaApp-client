@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const ScreenDiv = styled.div`
   min-width: 800px;
   min-height: 500px;
+  margin: 10px;
   ${'' /* width: 800px; */}
   ${'' /* height: 500px; */}
   border: 3px black solid;

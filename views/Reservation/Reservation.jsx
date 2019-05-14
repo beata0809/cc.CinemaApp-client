@@ -8,6 +8,7 @@ class Reservation extends React.Component {
     super();
     this.state = {
       tickets: 0,
+      takenSits: 0,
     };
   }
 
@@ -17,11 +18,17 @@ class Reservation extends React.Component {
     });
   };
 
+  downTakenSits = takenSits => {
+    this.setState({
+      takenSits,
+    });
+  };
+
   render() {
     return (
       <ReservationDiv>
-        <Tickets downTickets={this.downTickets} />
-        <Screen passTickets={this.state.tickets} />
+        <Tickets downTickets={this.downTickets} passTakenSits={this.state.takenSits} />
+        <Screen passTickets={this.state.tickets} downTakenSits={this.downTakenSits} />
       </ReservationDiv>
     );
   }

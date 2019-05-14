@@ -16,6 +16,10 @@ class Tickets extends React.Component {
   }
 
   IncreaseDecrease = event => {
+    if (this.state.total === 60 - this.props.passTakenSits) {
+      window.alert('Brak wolnych miejsc.')
+      return;
+    }
     const name = event.currentTarget.parentElement.className.split(' ');
     const newState = {};
     if (name[0] === 'plus') {
@@ -93,6 +97,7 @@ class Tickets extends React.Component {
 
 Tickets.propTypes = {
   downTickets: PropTypes.func,
+  passTakenSits: PropTypes.number,
 };
 
 export default Tickets;
