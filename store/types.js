@@ -2,3 +2,5 @@
 export const FETCH_MOVIES = 'FETCH_MOVIES';
 export const FETCH_UPCOMING_MOVIES = 'FETCH_UPCOMING_MOVIES';
 export const CATCH_MOVIE = 'CATCH_MOVIE';
+
+export const CATCH_DATE = 'CATCH_DATE';
