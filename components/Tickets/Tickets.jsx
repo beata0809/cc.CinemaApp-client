@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import { TicketDiv, AddButton, Header, Summary } from './TicketStyles';
 import TicketType from '../TicketType';
 
@@ -15,6 +16,10 @@ class Tickets extends React.Component {
   }
 
   IncreaseDecrease = event => {
+    if (this.state.total === 60 - this.props.passTakenSits) {
+      window.alert('Brak wolnych miejsc.')
+      return;
+    }
     const name = event.currentTarget.parentElement.className.split(' ');
     const newState = {};
     if (name[0] === 'plus') {
@@ -23,9 +28,12 @@ class Tickets extends React.Component {
         this.setState(
           prevState => ({ total: prevState.normal + prevState.reduced + prevState.senior }),
           () => {
-            this.setState(prevState => ({
-              price: prevState.normal * 20 + prevState.reduced * 15 + prevState.senior * 10,
-            }));
+            this.setState(
+              prevState => ({
+                price: prevState.normal * 20 + prevState.reduced * 15 + prevState.senior * 10,
+              }),
+              this.props.downTickets(this.state.total),
+            );
           },
         );
       });
@@ -36,9 +44,12 @@ class Tickets extends React.Component {
         this.setState(
           prevState => ({ total: prevState.normal + prevState.reduced + prevState.senior }),
           () => {
-            this.setState(prevState => ({
-              price: prevState.normal * 20 + prevState.reduced * 15 + prevState.senior * 10,
-            }));
+            this.setState(
+              prevState => ({
+                price: prevState.normal * 20 + prevState.reduced * 15 + prevState.senior * 10,
+              }),
+              this.props.downTickets(this.state.total),
+            );
           },
         );
       });
@@ -83,5 +94,10 @@ class Tickets extends React.Component {
     );
   }
 }
+
+Tickets.propTypes = {
+  downTickets: PropTypes.func,
+  passTakenSits: PropTypes.number,
+};
 
 export default Tickets;

@@ -5,6 +5,7 @@ import movies from './reducers/movies';
 import singleMovie from './reducers/catchMovie';
 import upcomingMovies from './reducers/upcomingMovies';
 import pickedDate from './reducers/catchDate';
+import sits from './reducers/sits';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   singleMovie,
   upcomingMovies,
   pickedDate,
+  sits,
 });
 
 export default rootReducer;
