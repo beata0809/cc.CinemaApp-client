@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
-import { Card, Spin, Divider } from 'antd';
-import { string, number } from 'prop-types';
-import { LoadDiv, Title, MoviePhoto, Desc, DescMovie } from './InfoModalStyles.js';
+import { Spin, Empty } from 'antd';
+import { string, number, object } from 'prop-types';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { LoadDiv, Title, MoviePhoto, Desc, PickerDate, DescMovie, Hour, Info } from './InfoModalStyles.js';
 
 class InfoModal extends React.Component {
   loading = () => {
@@ -12,7 +14,6 @@ class InfoModal extends React.Component {
     );
   };
 
-  // wyswietla wszystkie filmy
   renderModal = () => {
     return (
       <Fragment>
@@ -21,7 +22,25 @@ class InfoModal extends React.Component {
         </MoviePhoto>
         <Title>{`${this.props.title}`}</Title>
         <Desc>Opis filmu</Desc>
-        <DescMovie>{`${this.props.overview}`}</DescMovie>
+        <DescMovie>
+          {this.props.overview ? (
+            `${this.props.overview}`
+          ) : (
+            <Empty description="W tej chwili brak opisu" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
+        </DescMovie>
+        <div>
+          <Info>Musisz wybrać datę ze strony głównej, aby kontynuować</Info>
+          <PickerDate
+            onChange={this.onChange}
+            value={
+              this.props.pickedDate.month
+                ? moment(`2019-${this.props.pickedDate.month}-${this.props.pickedDate.day}`)
+                : null
+            }
+          />
+        </div>
+        <Hour>Wybrana godzina: 20:00</Hour>
       </Fragment>
     );
   };
@@ -37,6 +56,10 @@ InfoModal.propTypes = {
   title: string,
   poster: string,
   overview: string,
+  pickedDate: object,
 };
 
-export default InfoModal;
+const mapStateToProps = state => {
+  return { pickedDate: state.pickedDate };
+};
+export default connect(mapStateToProps)(InfoModal);

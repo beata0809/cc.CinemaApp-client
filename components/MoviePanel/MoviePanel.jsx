@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Fragment } from 'react';
-import { Divider, Spin, Modal } from 'antd';
+import { Divider, Spin, Modal, Button } from 'antd';
 import { connect } from 'react-redux';
-import { object, func } from 'prop-types';
+import { object, func, array } from 'prop-types';
+import { Link } from 'react-router-dom';
 import InfoModal from '../InfoModal';
 import { fetchMovies, catchMovie } from '../../store/actions';
 import { MovieDiv, LoadDiv } from './MoviePanelStyles.js';
@@ -56,12 +57,25 @@ class MoviePanel extends React.Component {
 
   render() {
     // eslint-disable-next-line no-use-before-define
-    console.log(this.props.singleMovie);
     return (
       <Fragment>
         <Divider>Aktualnie w kinach</Divider>
         <MovieDiv>{this.props.movies ? this.renderMovies() : this.loading()}</MovieDiv>
-        <Modal visible={this.state.visible} onOk={this.handleOk} onCancel={this.handleCancel}>
+        <Modal
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          footer={[
+            <Button key="anuluj" onClick={this.handleCancel}>
+              Anuluj
+            </Button>,
+            <Link key="rezerwuj" to="/reservation">
+              <Button type="primary" onClick={this.handleOk}>
+                Rezerwuj
+              </Button>
+            </Link>,
+          ]}
+        >
           {
             <InfoModal
               id={this.props.singleMovie.id}
@@ -77,7 +91,7 @@ class MoviePanel extends React.Component {
 }
 
 MoviePanel.propTypes = {
-  movies: object,
+  movies: array,
   singleMovie: object,
   fetchMovies: func,
   catchMovie: func,

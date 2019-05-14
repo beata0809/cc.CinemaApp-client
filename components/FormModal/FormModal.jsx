@@ -1,50 +1,47 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { number } from 'prop-types';
+import { func, number } from 'prop-types';
+import { Button } from 'antd';
+import Input from '../Input';
 import Summary from '../Summary';
 
-
 class FormModal extends React.Component {
-  renderInput({ input, label }){
-    return (
-      <div className="field" >
-        <label>{label}</label>
-        <input {...input} />
-      </div>
-    );
-  }
-
-  onSubmit(formValues){
+  onSubmit(formValues) {
     console.log(formValues);
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="firstName" component={this.renderInput} label="Imię" />
-        <Field name="lastName" component={this.renderInput} label="Nazwisko" />
-        <Field name="email" component={this.renderInput} label="Adres email" />
+        <Field name="firstName" component={Input} label="Imię" />
+        <Field name="lastName" component={Input} label="Nazwisko" />
+        <Field name="email" component={Input} label="Adres email" />
         <Summary
           normal={this.props.normal}
           reduced={this.props.reduced}
           senior={this.props.senior}
           price={this.props.price}
         />
-        <button>Rezerwuj</button>
+        <Button type="primary" block>
+          Rezerwuj
+        </Button>
       </form>
     );
   }
 }
 
-FormModal = reduxForm({
-  form: 'FormModal'
-})(FormModal);
-
 FormModal.propTypes = {
+  handleSubmit: func,
   normal: number,
   reduced: number,
   senior: number,
   price: number,
 };
 
-export default FormModal;
+const ReservationForm = reduxForm({
+  form: 'FormModal',
+})(FormModal);
+
+export default ReservationForm;
+
