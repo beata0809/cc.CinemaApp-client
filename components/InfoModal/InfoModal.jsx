@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
-import { Spin, Empty } from 'antd';
-import { string, number, object } from 'prop-types';
+import { Spin, Empty, Select } from 'antd';
+import { string, number, object, func } from 'prop-types';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import { catchHour } from '../../store/actions';
 import {
   LoadDiv,
   Title,
@@ -11,7 +12,6 @@ import {
   PickerDate,
   DescMovie,
   Hour,
-  Info,
   FirstPart,
   DescPart,
   SecondPart,
@@ -26,7 +26,13 @@ class InfoModal extends React.Component {
     );
   };
 
+  handleChange = value => {
+    this.props.catchHour(value);
+  };
+
   renderModal = () => {
+    const { Option } = Select;
+
     return (
       <Fragment>
         <FirstPart>
@@ -48,21 +54,28 @@ class InfoModal extends React.Component {
         <SecondPart>
           <p>Musisz wybrać datę ze strony głównej, aby kontynuować</p>
           <PickerDate
-            onChange={this.onChange}
             value={
               this.props.pickedDate.month
                 ? moment(`2019-${this.props.pickedDate.month}-${this.props.pickedDate.day}`)
                 : null
             }
           />
-          <Hour>Wybrana godzina: 20:00</Hour>
+          <Hour>{`Wybrana godzina: ${this.props.pickedHour.label ? this.props.pickedHour.label : ' '}`}</Hour>
+          <div>
+            <Select labelInValue defaultValue={{ key: '12' }} style={{ width: 120 }} onChange={this.handleChange}>
+              <Option value="12">12:00</Option>
+              <Option value="14">14:00</Option>
+              <Option value="16">16:00</Option>
+              <Option value="18">18:00</Option>
+              <Option value="20">20:00</Option>
+            </Select>
+          </div>
         </SecondPart>
       </Fragment>
     );
   };
 
   render() {
-    // console.log(this.props.id);
     return this.props.id ? this.renderModal(this.props) : this.loading();
   }
 }
@@ -73,9 +86,14 @@ InfoModal.propTypes = {
   poster: string,
   overview: string,
   pickedDate: object,
+  pickedHour: object,
+  catchHour: func,
 };
 
 const mapStateToProps = state => {
-  return { pickedDate: state.pickedDate };
+  return { pickedDate: state.pickedDate, pickedHour: state.pickedHour };
 };
-export default connect(mapStateToProps)(InfoModal);
+export default connect(
+  mapStateToProps,
+  { catchHour },
+)(InfoModal);
