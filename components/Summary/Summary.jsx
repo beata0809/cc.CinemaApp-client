@@ -1,13 +1,16 @@
 import React from 'react';
-import { number } from 'prop-types';
+import { number, object } from 'prop-types';
+import { connect } from 'react-redux';
 import { SummaryDiv, SummaryHeader, SpannedText } from './SummaryStyles';
 
 function Summary(props) {
   return (
     <SummaryDiv>
       <SummaryHeader>Podsumowanie</SummaryHeader>
-      <p>Film: </p>
-      <p>Data: </p>
+      <p>Film: {props.singleMovie.title}</p>
+      <p>
+        Data: {props.pickedDate.day}.{props.pickedDate.month}
+      </p>
       <p>Godzina: </p>
       <p>Miejsca: </p>
       <p>
@@ -35,6 +38,16 @@ Summary.propTypes = {
   reduced: number,
   senior: number,
   price: number,
+  singleMovie: object,
+  pickedDate: object,
 };
 
-export default Summary;
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    singleMovie: state.singleMovie,
+    pickedDate: state.pickedDate,
+  };
+};
+
+export default connect(mapStateToProps)(Summary);
