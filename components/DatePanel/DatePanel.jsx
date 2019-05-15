@@ -1,7 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { func } from 'prop-types';
+import { Link } from 'react-router-dom';
+import { catchDate } from '../../store/actions';
 import { DateDiv, DateContainer, DateAnchor } from './DatePanelStyles.js';
 
-const DatePanel = () => {
+
+const DatePanel = props => {
+  const getDate = (e, date) => {
+    e.preventDefault();
+    props.catchDate(date);
+  };
+
   const changeTheFirst = e => {
     const firstDiv = document.querySelector('a > *'); //1. div z datami
     if (e.target !== firstDiv && e.target !== firstDiv.childNodes[0] && e.target !== firstDiv.childNodes[1]) {
@@ -27,7 +37,7 @@ const DatePanel = () => {
     }
     return dates.map(date => (
       <DateAnchor href="#" key={`${date.day}${date.month}`} onClick={changeTheFirst}>
-        <DateContainer>
+        <DateContainer onClick={e => getDate(e, date)}>
           <h2>
             {date.day}.{date.month}
           </h2>
@@ -39,4 +49,16 @@ const DatePanel = () => {
 
   return <DateDiv>{renderDates()}</DateDiv>;
 };
-export default DatePanel;
+
+DatePanel.propTypes = {
+  catchDate: func,
+};
+
+const mapStateToProps = state => {
+  return { pickedDate: state.pickedDate };
+};
+
+export default connect(
+  mapStateToProps,
+  { catchDate },
+)(DatePanel);
