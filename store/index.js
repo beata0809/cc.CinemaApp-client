@@ -5,6 +5,7 @@ import movies from './reducers/movies';
 import singleMovie from './reducers/catchMovie';
 import upcomingMovies from './reducers/upcomingMovies';
 import pickedDate from './reducers/catchDate';
+import pickedHour from './reducers/catchHour';
 import sits from './reducers/sits';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   singleMovie,
   upcomingMovies,
   pickedDate,
+  pickedHour,
   sits,
 });
 
