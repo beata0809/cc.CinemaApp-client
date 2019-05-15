@@ -3,7 +3,19 @@ import { Spin, Empty } from 'antd';
 import { string, number, object } from 'prop-types';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { LoadDiv, Title, MoviePhoto, Desc, PickerDate, DescMovie, Hour, Info } from './InfoModalStyles.js';
+import {
+  LoadDiv,
+  Title,
+  MoviePhoto,
+  Desc,
+  PickerDate,
+  DescMovie,
+  Hour,
+  Info,
+  FirstPart,
+  DescPart,
+  SecondPart,
+} from './InfoModalStyles.js';
 
 class InfoModal extends React.Component {
   loading = () => {
@@ -17,20 +29,24 @@ class InfoModal extends React.Component {
   renderModal = () => {
     return (
       <Fragment>
-        <MoviePhoto>
-          <img src={`http://image.tmdb.org/t/p/w154/${this.props.poster}`} alt={this.props.title} />
-        </MoviePhoto>
-        <Title>{`${this.props.title}`}</Title>
-        <Desc>Opis filmu</Desc>
-        <DescMovie>
-          {this.props.overview ? (
-            `${this.props.overview}`
-          ) : (
-            <Empty description="W tej chwili brak opisu" image={Empty.PRESENTED_IMAGE_SIMPLE} />
-          )}
-        </DescMovie>
-        <div>
-          <Info>Musisz wybrać datę ze strony głównej, aby kontynuować</Info>
+        <FirstPart>
+          <MoviePhoto>
+            <img src={`http://image.tmdb.org/t/p/w154/${this.props.poster}`} alt={this.props.title} />
+          </MoviePhoto>
+          <DescPart>
+            <Title>{`${this.props.title}`}</Title>
+            <Desc>Opis filmu</Desc>
+            <DescMovie>
+              {this.props.overview ? (
+                `${this.props.overview}`
+              ) : (
+                <Empty description="W tej chwili brak opisu" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              )}
+            </DescMovie>
+          </DescPart>
+        </FirstPart>
+        <SecondPart>
+          <p>Musisz wybrać datę ze strony głównej, aby kontynuować</p>
           <PickerDate
             onChange={this.onChange}
             value={
@@ -39,8 +55,8 @@ class InfoModal extends React.Component {
                 : null
             }
           />
-        </div>
-        <Hour>Wybrana godzina: 20:00</Hour>
+          <Hour>Wybrana godzina: 20:00</Hour>
+        </SecondPart>
       </Fragment>
     );
   };
