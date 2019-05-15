@@ -1,6 +1,6 @@
 import moviedb from '../../apis/moviedb';
 import server from '../../apis/server';
-import { FETCH_MOVIES, FETCH_UPCOMING_MOVIES, CATCH_MOVIE, CATCH_DATE, FETCH_SITS, FETCH_RESERVATION_FORM } from '../types';
+import { FETCH_MOVIES, FETCH_UPCOMING_MOVIES, CATCH_MOVIE, CATCH_DATE, FETCH_SITS, FETCH_RESERVATION_FORM, CATCH_HOUR  } from '../types';
 
 export const fetchSits = (title, date) => async dispatch => {
   try {
@@ -59,5 +59,10 @@ export const catchMovie = par => ({
 
 export const catchDate = par => ({
   type: CATCH_DATE,
+  payload: par,
+});
+
+export const catchHour = par => ({
+  type: CATCH_HOUR,
   payload: par,
 });
