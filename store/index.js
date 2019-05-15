@@ -7,6 +7,7 @@ import upcomingMovies from './reducers/upcomingMovies';
 import pickedDate from './reducers/catchDate';
 import pickedHour from './reducers/catchHour';
 import sits from './reducers/sits';
+import reservationForm from './reducers/reservationForm'
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   pickedDate,
   pickedHour,
   sits,
+  reservationForm,
 });
 
 export default rootReducer;

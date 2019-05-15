@@ -2,13 +2,22 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { func, number } from 'prop-types';
+import { connect } from 'react-redux';
 import { Button } from 'antd';
+import { fetchReservationForm } from '../../store/actions';
 import Input from '../Input';
 import Summary from '../Summary';
 
 class FormModal extends React.Component {
+  constructor() {
+    super()
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+
   onSubmit(formValues) {
     console.log(formValues);
+    // console.log(this.props);
+    this.props.fetchReservationForm(formValues);
   }
 
   render() {
@@ -23,7 +32,7 @@ class FormModal extends React.Component {
           senior={this.props.senior}
           price={this.props.price}
         />
-        <Button type="primary" block>
+        <Button type="primary" block htmlType="submit">
           Rezerwuj
         </Button>
       </form>
@@ -39,9 +48,15 @@ FormModal.propTypes = {
   price: number,
 };
 
+const mapStateToProps = state => {
+return { firstName: state.firstName, lastName: state.lastName/*, email: state.email*/ };
+};
+
 const ReservationForm = reduxForm({
   form: 'FormModal',
 })(FormModal);
 
-export default ReservationForm;
-
+export default connect(
+  mapStateToProps,
+  { fetchReservationForm },
+)(ReservationForm);
