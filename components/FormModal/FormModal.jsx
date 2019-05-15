@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { func, number } from 'prop-types';
+import { func, number, object, array } from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'antd';
 import { fetchReservationForm } from '../../store/actions';
@@ -10,14 +10,21 @@ import Summary from '../Summary';
 
 class FormModal extends React.Component {
   constructor() {
-    super()
-    this.onSubmit = this.onSubmit.bind(this)
+    super();
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onSubmit(formValues) {
-    console.log(formValues);
-    // console.log(this.props);
-    this.props.fetchReservationForm(formValues);
+    const { pickedDate, pickedHour, selectedSeats, singleMovie } = this.props;
+    const reservation = {
+      ...formValues,
+      hour: pickedHour.label,
+      date: `${pickedDate.day}.${pickedDate.month}`,
+      selectedSeats,
+      title: singleMovie.title,
+    };
+    console.log(reservation);
+    this.props.fetchReservationForm(reservation);
   }
 
   render() {
@@ -46,10 +53,20 @@ FormModal.propTypes = {
   reduced: number,
   senior: number,
   price: number,
+  pickedDate: object,
+  pickedHour: object,
+  singleMovie: object,
+  selectedSeats: array,
+  fetchReservationForm: func,
 };
 
 const mapStateToProps = state => {
-return { firstName: state.firstName, lastName: state.lastName/*, email: state.email*/ };
+  return {
+    singleMovie: state.singleMovie,
+    pickedDate: state.pickedDate,
+    pickedHour: state.pickedHour,
+    selectedSeats: state.selectedSeats,
+  };
 };
 
 const ReservationForm = reduxForm({

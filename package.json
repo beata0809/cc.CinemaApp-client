@@ -4,7 +4,8 @@
   "description": "cc.CinemaApp-client",
   "main": "index.js",
   "scripts": {
-    "front": "webpack-dev-server --inline --hot --config webpack.dev.js"
+    "front": "webpack-dev-server --inline --hot --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",

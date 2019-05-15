@@ -1,6 +1,20 @@
 import moviedb from '../../apis/moviedb';
 import server from '../../apis/server';
-import { FETCH_MOVIES, FETCH_UPCOMING_MOVIES, CATCH_MOVIE, CATCH_DATE, FETCH_SITS, FETCH_RESERVATION_FORM, CATCH_HOUR  } from '../types';
+import {
+  FETCH_MOVIES,
+  FETCH_UPCOMING_MOVIES,
+  CATCH_MOVIE,
+  CATCH_DATE,
+  FETCH_SITS,
+  FETCH_RESERVATION_FORM,
+  CATCH_HOUR,
+  SELECT_SEAT,
+} from '../types';
+
+export const selectSeat = seats => ({
+  type: SELECT_SEAT,
+  payload: seats,
+});
 
 export const fetchSits = (title, date) => async dispatch => {
   try {
@@ -38,11 +52,9 @@ export const fetchUpcomingMovies = () => async dispatch => {
   }
 };
 
-export const fetchReservationForm = ({ name, surname }) => async dispatch => {
+export const fetchReservationForm = reservation => async dispatch => {
   try {
-    const {
-      data
-    } = await server.post(`/ticket/`, {name, surname} );
+    const { data } = await server.post(`/ticket/`, reservation);
     dispatch({
       type: FETCH_RESERVATION_FORM,
       payload: data,

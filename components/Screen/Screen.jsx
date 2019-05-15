@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { fetchSits, catchMovie, catchDate } from '../../store/actions';
+import { fetchSits, catchMovie, catchDate, selectSeat } from '../../store/actions';
 import { Sits } from '../Sits/Sits.jsx';
 import { Rows } from '../Rows/Rows.jsx';
 import { Legend } from '../Legend/Legend.jsx';
@@ -63,6 +63,7 @@ class Screen extends React.Component {
         this.changeStatus(event),
       ),
     );
+    this.props.selectSeat(this.state.sitsList);
   };
 
   changeStatus = event => {
@@ -114,6 +115,7 @@ Screen.propTypes = {
   sits: PropTypes.array,
   singleMovie: PropTypes.object,
   pickedDate: PropTypes.object,
+  selectSeat: PropTypes.func,
 };
 
 const mapStateToProps = state => {
@@ -121,6 +123,7 @@ const mapStateToProps = state => {
     sits: state.sits,
     singleMovie: state.singleMovie,
     pickedDate: state.pickedDate,
+    selectedSeats: state.selectedSeats,
   };
 };
 
@@ -130,5 +133,6 @@ export default connect(
     fetchSits,
     catchMovie,
     catchDate,
+    selectSeat,
   },
 )(Screen);
