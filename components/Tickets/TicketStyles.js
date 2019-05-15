@@ -8,6 +8,7 @@ export const TicketDiv = styled.div`
   align-content: stretch;
   align-items: stretch;
   border: 3px black solid;
+  margin: 10px;
 `;
 
 export const Summary = styled.div`

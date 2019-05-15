@@ -1,6 +1,9 @@
 import React from 'react';
+import { Modal } from 'antd';
+import { PropTypes } from 'prop-types';
 import { TicketDiv, AddButton, Header, Summary } from './TicketStyles';
 import TicketType from '../TicketType';
+import FormModal from '../FormModal';
 
 class Tickets extends React.Component {
   constructor() {
@@ -11,10 +14,15 @@ class Tickets extends React.Component {
       senior: 0,
       total: 0,
       price: 0,
+      visible: false,
     };
   }
 
   IncreaseDecrease = event => {
+    if (this.state.total === 60 - this.props.passTakenSits) {
+      window.alert('Brak wolnych miejsc.')
+      return;
+    }
     const name = event.currentTarget.parentElement.className.split(' ');
     const newState = {};
     if (name[0] === 'plus') {
@@ -23,9 +31,12 @@ class Tickets extends React.Component {
         this.setState(
           prevState => ({ total: prevState.normal + prevState.reduced + prevState.senior }),
           () => {
-            this.setState(prevState => ({
-              price: prevState.normal * 20 + prevState.reduced * 15 + prevState.senior * 10,
-            }));
+            this.setState(
+              prevState => ({
+                price: prevState.normal * 20 + prevState.reduced * 15 + prevState.senior * 10,
+              }),
+              this.props.downTickets(this.state.total),
+            );
           },
         );
       });
@@ -36,13 +47,28 @@ class Tickets extends React.Component {
         this.setState(
           prevState => ({ total: prevState.normal + prevState.reduced + prevState.senior }),
           () => {
-            this.setState(prevState => ({
-              price: prevState.normal * 20 + prevState.reduced * 15 + prevState.senior * 10,
-            }));
+            this.setState(
+              prevState => ({
+                price: prevState.normal * 20 + prevState.reduced * 15 + prevState.senior * 10,
+              }),
+              this.props.downTickets(this.state.total),
+            );
           },
         );
       });
     }
+  };
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  handleCancel = e => {
+    this.setState({
+      visible: false,
+    });
   };
 
   render() {
@@ -76,12 +102,31 @@ class Tickets extends React.Component {
         <Summary>
           <div>Cena</div> <div> {this.state.price} zł </div>
         </Summary>
-        <AddButton className="flex" type="primary">
+        <AddButton className="flex" type="primary" onClick={this.showModal}>
           Rezerwuj
         </AddButton>
+        <Modal
+          title="Formularz rezerwacji"
+          centered
+          visible={this.state.visible}
+          onCancel={this.handleCancel}
+          footer={null}
+        >
+          <FormModal
+            normal={this.state.normal}
+            reduced={this.state.reduced}
+            senior={this.state.senior}
+            price={this.state.price}
+          />
+        </Modal>
       </TicketDiv>
     );
   }
 }
+
+Tickets.propTypes = {
+  downTickets: PropTypes.func,
+  passTakenSits: PropTypes.number,
+};
 
 export default Tickets;
