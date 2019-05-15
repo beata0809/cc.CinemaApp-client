@@ -7,7 +7,9 @@ export const TicketDiv = styled.div`
   justify-content: space-between;
   align-content: stretch;
   align-items: stretch;
-  border: 3px black solid;
+  border: 5px #ddd solid;
+  border-radius: 10px;
+  background: #F5F5F5;
   margin: 10px;
 `;
 

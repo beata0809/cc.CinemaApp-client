@@ -6,7 +6,9 @@ export const ScreenDiv = styled.div`
   margin: 10px;
   ${'' /* width: 800px; */}
   ${'' /* height: 500px; */}
-  border: 3px black solid;
+  border: 5px #ddd solid;
+  border-radius: 10px;
+  background: #F5F5F5;
   ${'' /* display: flex; */}
   ${'' /* justify-content: center; */}
   ${'' /* align-items: center; */}
